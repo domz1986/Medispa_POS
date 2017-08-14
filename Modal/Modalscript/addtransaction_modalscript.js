@@ -43,6 +43,7 @@
     }
 
   });
+
   function Loaddata(ID,name,qnty,pic,category,prcperunit)
   {
     var photo = document.getElementById('picture');
@@ -52,6 +53,7 @@
     $('#proprice').text(prcperunit);
     $('#proqnty').text(qnty);
   }
+
   function check_type()
   {
     var type = $('#tran_type').dropdown('get value');
@@ -66,6 +68,7 @@
         rep.setAttribute('style','visibility:visible');
     }
   }
+
   function loadDefaultOnload(){
 
 

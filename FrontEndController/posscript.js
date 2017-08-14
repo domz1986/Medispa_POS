@@ -45,10 +45,14 @@ function loadProductsToDropBox(){
     });
 
   }
-  function addFeetotable()
-  {
-    alert("fee");
+  function addFeetotable(){
+
+    $('#addfeesModal').load('../Modal/addfeesmodal.php', function(){
+        $('#addfeesModal').modal('show');
+    });
+
   }
+
   function addCurrenttable(ID,qnty,pic,category,prcperunit)
   {
     if(qnty<=0)
