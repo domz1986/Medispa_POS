@@ -403,7 +403,7 @@
           echo '</div>';
 
           echo '<span class="icon pull-right" style="cursor:pointer;">';
-          echo '<input class="mini ui gray button invent1" type="submit" name="submit" value="Add Transaction" onclick="addCurrenttable(\''.$row['ID'].'\',\''.$row['productName'].'\','.$qnty.',\''.$row['productPhoto'].'\',\''.$row['productCategory'].'\','.$row['productPricePerUnit'].')"></i>';
+          echo '<input class="mini ui gray button invent1" type="submit" name="submit" value="Add Transaction" onclick="addCurrenttable(\''.$row['ID'].'\',\''.$row['productName'].'\','.$qnty.',\''.$row['productPhoto'].'\',\''.$row['productCategory'].'\','.$row['productPricePerUnit'].',\''.$row['productUnit'].'\')"></i>';
           echo '</span>';
 
           echo '<div class="card-small-content"><br><br>';

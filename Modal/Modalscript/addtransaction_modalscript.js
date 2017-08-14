@@ -43,13 +43,14 @@
     }
 
   });
-  function Loaddata(ID,name,qnty,pic,category,prcperunit)
+  function Loaddata(ID,name,qnty,pic,category,prcperunit,prunit)
   {
+
     var photo = document.getElementById('picture');
     photo.setAttribute('src','../UploadedProductPhoto/'+pic);
     $('#proname').text(name);
     $('#procat').text(category);
-    $('#proprice').text(prcperunit);
+    $('#proprice').text(prcperunit+"/"+prunit);
     $('#proqnty').text(qnty);
   }
   function check_type()
