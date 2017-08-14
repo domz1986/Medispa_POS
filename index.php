@@ -24,9 +24,7 @@
 <body>
 
   <script type="text/javascript">
-        
-    alert("testing")
-      
+     
     window.location = "./POS_module/";
 
   </script>
