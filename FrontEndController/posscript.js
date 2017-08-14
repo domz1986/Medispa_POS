@@ -62,7 +62,7 @@ function loadProductsToDropBox(){
       {
           $('#addtransactionModal').modal('show',function(e)
           {
-            alert(prunit);
+
             Loaddata(ID,qnty,pic,category,prcperunit,prunit);
           });
       });

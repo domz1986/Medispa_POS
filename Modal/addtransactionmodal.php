@@ -27,10 +27,10 @@
                   </div>
                 </div>
                 <div class="field">
-                  <h6 id='proname'>Name</h6>
-                  <h6 id='procat'>Category</h6>
-                  <h6 id='proprice'>Price per Unit</h6>
-                  <h6 id='proqnty'>Total Quantity</h6>
+                  <h6 id='proname'></h6>
+                  <h6 id='procat'></h6>
+                  <h6 id='proprice'></h6>
+                  <h6 id='proqnty'></h6>
                 </div>
           </div>
           <div class="row">
