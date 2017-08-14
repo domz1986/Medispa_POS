@@ -1,0 +1,46 @@
+.ui.container{
+  width: 50% !important;
+}
+
+.ui.header{
+  margin-top: 5% !important;
+  font-size: 30px !important;
+}
+
+.ui.middle.aligned.small.image{
+  margin-bottom: 2%;
+}
+
+.left1{
+  text-align: left !important;
+}
+
+.header1{
+  font-weight: 900;
+}
+
+.info1{
+  margin-left: 10px !important;
+}
+
+@media print{
+
+  .ui.center.aligned.center{
+    width: 100% !important;
+  }
+
+  .ui.header h4{
+    text-align: center !important;
+    font-size: 20px !important;
+  }
+
+  .ui.middle.aligned.small.image{
+    margin-right:  40px !important;
+  }
+
+  .ui.form{
+    margin-left: 50px !important;
+  }
+
+
+}
