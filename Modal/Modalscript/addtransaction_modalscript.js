@@ -51,6 +51,7 @@
     $('#proname').text(name);
     $('#procat').text(category);
     $('#proprice').text(prcperunit+"/"+prunit);
+    alert("qnty"+qnty);
     $('#proqnty').text(qnty);
   }
 
