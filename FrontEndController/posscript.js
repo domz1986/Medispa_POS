@@ -49,9 +49,9 @@ function loadProductsToDropBox(){
   {
     alert("fee");
   }
-  function addCurrenttable(ID,name,qnty,pic,category,prcperunit,prunit)
+  function addCurrenttable(ID,name,qnty,pic,category,prcperunit,prunit,prprqnty)
   {
-    alert("este "+ID+'|'+name+'|'+qnty+'|'+pic+'|'+category+'|'+prcperunit+'|'+prunit+"|");
+  //  alert("este "+ID+'|'+name+'|'+qnty+'|'+pic+'|'+category+'|'+prcperunit+'|'+prunit+"|");
     if(qnty<=0)
     {
       alert("This product needs to be Restocked");
@@ -62,8 +62,7 @@ function loadProductsToDropBox(){
       {
           $('#addtransactionModal').modal('show',function(e)
           {
-
-            Loaddata(ID,qnty,pic,category,prcperunit,prunit);
+            Loaddata(ID,name,qnty,pic,category,prcperunit,prunit,prprqnty);
           });
       });
     }

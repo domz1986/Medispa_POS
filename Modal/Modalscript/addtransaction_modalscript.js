@@ -1,58 +1,28 @@
 
-
-  var saveproduct = 0;
-
   window.onload = loadDefaultOnload();
 
   $(".transactionDropDown").dropdown();
 
-  $("#ap_type").change(function(){
 
-    var type = $("#ap_type").dropdown("get value");
-
-    if(type == 1){
-
-      document.getElementById("ap_qntyperunit").value = 1;
-      document.getElementById("ap_qntyperunit").readOnly = true;
-
-    }
-    else {
-
-      document.getElementById("ap_qntyperunit").value = "";
-      document.getElementById("ap_qntyperunit").readOnly = false;
-
-    }
-
-  });
-
-  $("#ap_alerttype").change(function(){
-
-    var type = $("#ap_alerttype").dropdown("get value");
-
-    if(type == 1){
-
-      document.getElementById("ap_alertqnty").value = 1 ;
-      document.getElementById("ap_alertqnty").readOnly = false;
-
-    }
-    else {
-
-      document.getElementById("ap_alertqnty").value = 0;
-      document.getElementById("ap_alertqnty").readOnly = true;
-
-    }
-
-  });
-  function Loaddata(ID,name,qnty,pic,category,prcperunit,prunit)
+  function Loaddata(ID,name,qnty,pic,category,prcperunit,prunit,prprqnty)
   {
-
     var photo = document.getElementById('picture');
     photo.setAttribute('src','../UploadedProductPhoto/'+pic);
     $('#proname').text(name);
+    document.getElementById('proname').value = ID;
+    if(category=="")
+      category='---';
     $('#procat').text(category);
-    $('#proprice').text(prcperunit+"/"+prunit);
-    alert("qnty"+qnty);
-    $('#proqnty').text(qnty);
+    if(prcperunit=="")
+      prcperunit='---';
+    if(prunit=="")
+      prunit='---';
+    $('#proprice').text(prcperunit+" / "+prunit);
+    document.getElementById('proprice').value = prcperunit;
+    $('#procon').text(prprqnty+" "+prunit+" for each Content")
+    document.getElementById('procon').value = prprqnty;
+    $('#proqnty').text(qnty+" "+prunit);
+    document.getElementById('proqnty').value = qnty;
   }
 
   function check_type()
@@ -75,68 +45,46 @@
 
   }
 
-  function saveNewProduct(){
-
-    var name = document.getElementById('ap_name').value;
-
-    if(name != ""){
-
-      var formData = new FormData($('#addproductform')[0]);
-      var alertType = $("#ap_alerttype").dropdown("get value");
-
-      formData.append('func', 1);
-      formData.append('saveproduct', saveproduct);
-      formData.append('ap_alerttype', alertType);
-
-      $.ajax({
-
-          url: "../PHP/BackEndController/inventorycontroller.php",
-          type: "POST",
-          data: formData,
-          success: function (resultdata) {
-
-            if($.trim(resultdata) == 1){
-
-              loadProductsToDropBox();
-              loadProductsToCards();
-              document.getElementById("addproductform").reset();
-              loadDefaultOnload();
-              saveproduct = 0;
-
-              alert("Products Saved.");
-
-            }
-
-            else if($.trim(resultdata) == 2){
-
-              if(confirm("Product name already exist. Do you still want to save this product?")){
-
-                saveproduct = 1;
-                saveNewProduct();
-
-              }
-
-            }
-
-            else{
-
-              alert("Error Occured!");
-
-            }
-
-          },
-          cache: false,
-          contentType: false,
-          processData: false
-
-      });
-
+  function check_request() //math shit
+  {
+    var type = $('#tran_type').dropdown('get value');
+    var total = $('#proqnty').val();
+    var content = $('#procon').val();
+    var setprice = $('#Individual_price').val();
+    if(type==1) //sold individually
+    {
+      if(total>=content && setprice>=1)
+      {
+        $('#selectstockModal').load('../Modal/selectionstockmodal.php', function()
+        {
+            $('#selectstockModal').modal('show',function(e)
+            {
+              var id = document.getElementById('proname').value;
+              loaddata(id,content,setprice);
+            });
+        });
+      }
+      else {
+        alert("Stock of this product is not enough");
+      }
+    }else
+    {
+      var requestqnty = document.getElementById('Repack_quantity').value;
+      if(total>=requestqnty&&requestqnty!='')
+      {
+        $('#selectstockModal').load('../Modal/selectionstockmodal.php', function()
+        {
+            $('#selectstockModal').modal('show',function(e)
+            {
+              var id = document.getElementById('proname').value;
+              var price = document.getElementById('proprice').value * requestqnty;
+              loaddata(id,requestqnty,price);
+            });
+        });
+      }
+      else
+      {
+        alert("Stock of this product is not enough");
+      }
     }
-    else {
-
-      alert("Please enter product name.");
-
-    }
-
-
   }

@@ -6,7 +6,6 @@
 
     <form class="ui form" id="addproductform" onsubmit="return false" enctype="multipart/form-data">
 
-      <div class="container-fluid">
           <div class="ui top attached segment d-1">
             <div class="two fields">
                 <div class="field">
@@ -21,16 +20,20 @@
                           <h6>Name:</h6>
                           <h6>Category:</h6>
                           <h6>Price per Unit:</h6>
+                          <h6>Unit per Content:</h6>
                           <h6>Total Quantity:</h6>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="field">
-                  <h6 id='proname'></h6>
-                  <h6 id='procat'></h6>
-                  <h6 id='proprice'></h6>
-                  <h6 id='proqnty'></h6>
+                  <div class="t-left">
+                    <h6 id='proname'></h6>
+                    <h6 id='procat'></h6>
+                    <h6 id='proprice'></h6>
+                    <h6 id='procon'></h6>
+                    <h6 id='proqnty'></h6>
+                  </div>
                 </div>
           </div>
           <div class="row">
@@ -62,7 +65,7 @@
       <div class="right actions">
 
         <input class="ui pink button" type="submit"
-                name="done" value="Save" onclick="saveNewProduct()">
+                name="done" value="Save" onclick="check_request()">
 
         <input class="ui cancel pink button"  type="submit"
                 name="done" value="Close">
@@ -71,6 +74,9 @@
     </form>
 
 </div>
-
+<div> <!-- ADD NEW PRODUCT MODAL -->
+  <div class="ui small modal addproduct" id="selectstockModal" style="height: 550px;">
+  </div>
+</div>
 
 <script src="../Modal/Modalscript/addtransaction_modalscript.js"></script>
