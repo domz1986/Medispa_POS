@@ -23,6 +23,10 @@
     document.getElementById('procon').value = prprqnty;
     $('#proqnty').text(qnty+" "+prunit);
     document.getElementById('proqnty').value = qnty;
+
+    
+
+
   }
 
   function check_type()
@@ -47,7 +51,7 @@
 
   function check_request() //math shit
   {
-    var type = $('#tran_type').dropdown('get value');
+  /*  var type = $('#tran_type').dropdown('get value');
     var total = $('#proqnty').val();
     var content = $('#procon').val();
     var setprice = $('#Individual_price').val();
@@ -57,10 +61,11 @@
       {
         $('#selectstockModal').load('../Modal/selectionstockmodal.php', function()
         {
-            $('#selectstockModal').modal('show',function(e)
+          alert("enter1");
+            $('#selectstockModal').modal('show',function()
             {
               var id = document.getElementById('proname').value;
-              loaddata(id,content,setprice);
+              loadstockdata(id,content,setprice);
             });
         });
       }
@@ -71,20 +76,20 @@
     {
       var requestqnty = document.getElementById('Repack_quantity').value;
       if(total>=requestqnty&&requestqnty!='')
-      {
-        $('#selectstockModal').load('../Modal/selectionstockmodal.php', function()
+      {*/
+        $('#selectstockModal').load('../Modal/selectionstockmodal.php',
+        function()
         {
-            $('#selectstockModal').modal('show',function(e)
+            $('#selectstockModal').modal('show',
+            function()
             {
-              var id = document.getElementById('proname').value;
-              var price = document.getElementById('proprice').value * requestqnty;
-              loaddata(id,requestqnty,price);
+              alert("test");
             });
         });
-      }
+      /*}
       else
       {
         alert("Stock of this product is not enough");
       }
+    }*/
     }
-  }

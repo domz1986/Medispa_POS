@@ -14,6 +14,10 @@
       break;
 
     case 2: //LOAD STOCKS
+
+      $loadstocks = new InventoryClass();
+      $loadstocks->setProductID($_POST['productid']);
+      echo $loadstocks->loadstocks();
   }
 
  ?>

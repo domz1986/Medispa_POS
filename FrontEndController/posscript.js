@@ -58,9 +58,11 @@ function loadProductsToDropBox(){
     }
     else
     {
-      $('#addtransactionModal').load('../Modal/addtransactionmodal.php', function()
+      $('#addtransactionModal').load('../Modal/addtransactionmodal.php',
+      function()
       {
-          $('#addtransactionModal').modal('show',function(e)
+          $('#addtransactionModal').modal('show',
+          function()
           {
             Loaddata(ID,name,qnty,pic,category,prcperunit,prunit,prprqnty);
           });

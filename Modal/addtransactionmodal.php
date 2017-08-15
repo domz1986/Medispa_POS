@@ -7,7 +7,7 @@
     <form class="ui form" id="addproductform" onsubmit="return false" enctype="multipart/form-data">
 
           <div class="ui top attached segment d-1">
-            <div class="two fields">
+            <div class="three fields">
                 <div class="field">
                   <div class="two fields">
                     <div class="field">
@@ -20,7 +20,7 @@
                           <h6>Name:</h6>
                           <h6>Category:</h6>
                           <h6>Price per Unit:</h6>
-                          <h6>Unit per Content:</h6>
+                          <h6>Content:</h6>
                           <h6>Total Quantity:</h6>
                       </div>
                     </div>
@@ -34,6 +34,19 @@
                     <h6 id='procon'></h6>
                     <h6 id='proqnty'></h6>
                   </div>
+                </div>
+                <div class="field">
+
+                    <table class="ui definition table">
+                      <thead>
+                        <tr><th></th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbl_body">
+                      </tbody>
+                    </table>
                 </div>
           </div>
           <div class="row">
@@ -51,14 +64,17 @@
                     </div>
                   </div>
                 </div>
-                <div  class="row col-sm-5" id="indi" style="display:none">
-                    <label>Set Price</label>
-                    <input type="text" id="Individual_price">
+                <div class="field">
+                  <div  class="row col-sm-5" id="indi" style="display:none">
+                      <label>Set Price</label>
+                      <input type="text" id="Individual_price">
+                  </div>
+                  <div  class="row col-sm-5" id="repack" style="display:none">
+                      <label>Quantity</label>
+                      <input type="text" id="Repack_quantity">
+                  </div>
                 </div>
-                <div  class="row col-sm-5" id="repack" style="display:none">
-                    <label>Quantity</label>
-                    <input type="text" id="Repack_quantity">
-                </div>
+
             </div>
           </div>
       </div>
@@ -74,9 +90,6 @@
     </form>
 
 </div>
-<div> <!-- ADD NEW PRODUCT MODAL -->
-  <div class="ui small modal addproduct" id="selectstockModal" style="height: 550px;">
-  </div>
-</div>
+
 
 <script src="../Modal/Modalscript/addtransaction_modalscript.js"></script>

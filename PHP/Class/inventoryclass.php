@@ -154,7 +154,26 @@
       }
 
     }
-    
+    public function loadstocks()
+    {
+      include("../connection.php");
+
+      $sql = "SELECT * FROM tblproductstocks WHERE stockStatus LIKE 1 AND stockQntyRemaining > 0 AND productID = ".$this->productID."ORDER BY stockExpiration ASC";
+
+      $result = $con->query($sql);
+
+      if($result->num_rows > 0)
+      {
+        while($row = $result->fetch_assoc())
+        {
+          echo "<tr>";
+          echo "<td><div class='ui checkbox' value='".$row['stockID']."'></div></td>";
+          echo "<td>".$row['stockExpiration']."></td>";
+          echo "<td>".$row['stockQntyRemaining']."></td>";
+        }
+      }
+
+    }
     private function clean_value($value){
 
       $return_value = preg_replace('/[^a-zA-Z0-9\s-_\/().%+&#]/', "", strip_tags($value));

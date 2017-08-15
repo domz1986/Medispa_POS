@@ -177,10 +177,6 @@ session_start();
       </div>
     </div>
 
-    <div> <!-- ADD NEW PRODUCT MODAL -->
-      <div class="ui small modal addproduct" id="addfeesModal" style="height: 230px;">
-      </div>
-    </div>
 
     <script src="../FrontEndController/posscript.js"></script>
 
