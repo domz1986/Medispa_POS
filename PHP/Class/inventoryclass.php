@@ -137,9 +137,9 @@
           echo '</span>';
 
           echo '<div class="card-small-content"><br><br>';
-          echo '<h5 style="cursor:pointer;">'
+          echo '<h5 style="cursor:pointer;" >'
                                         .$row['productName'].'</h5>';
-          echo '<h4>Quantity: '.$qnty.'</h4>';
+          echo '<h4>Quantity: <h7 id="stockq'.$row['ID'].'">'.$qnty.'</h7></h4>';
           echo '<div class="card-small-price">P'.$row['productPricePerUnit'].' /
                                                    '.$row['productUnit'].'</div>';
           echo '</div>';

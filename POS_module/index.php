@@ -115,7 +115,7 @@ session_start();
                       <h4><b>Current Transaction</b></h4>
                       <div id="table-wrapper">
                           <div id="table-scroll">
-                            <table class="ui celled table">
+                            <table class="ui celled table" id='tbl_purchase'>
                               <thead>
                                 <tr><th>Product Name</th>
                                 <th>Quantity</th>

@@ -68,6 +68,7 @@
     var setprice = $('#Individual_price').val();
     if(type==1) //sold individually
     {
+      var requestqnty = document.getElementById('procon').value;
       if(total>=content && setprice>=1)
       {
         check_stock(requestqnty);
@@ -93,14 +94,14 @@
       }
     }
   }
-  function check_stock(stock)
+  function check_stock(requestqnty)
   {
+  //  alert(requestqnty);
     var table = document.getElementById('tbl_stockbody');
     var total=0;
     var stockid = "";
     var i;
     var checkbox;
-    alert("enter"+table.rows.length);
     for(i=0;i<table.rows.length;i++)
     {
       if(document.getElementById('check'+i).checked)
@@ -110,14 +111,30 @@
       }
       else
       {
-          alert('nuay man check');
       }
     }
-    alert(stockid);
     var ptable = document.getElementById('tbl_body');
-    var row = ptable.insertRow(ptable.rows.length);
-    row.insertCell().innerHTML=stockid;
-    row.insertCell().innerHTML="kankong";
-    row.insertCell();
-    alert("inserted");
+    if(stockid!="" && total>=requestqnty)
+    {
+          var row = ptable.insertRow(ptable.rows.length);
+          var x = row.insertCell();
+          x.setAttribute("style","display:none");
+          x.innerHTML=document.getElementById('proname').value;
+          row.insertCell().innerHTML=stockid;
+          row.insertCell().innerHTML="kankong";
+          row.insertCell();
+          check_quantity(x.innerHTML,requestqnty);
+
+          $('#addtransactionModal').modal('hide');
+    }
+    else
+    {
+        alert("Please check/select enough Stocks");
+    }
+  }
+  function check_quantity(productID,requestqnty)
+  {
+      var qnty =document.getElementById('stockq'+productID);
+      var Orignalqnty = qnty.innerHTML;
+      qnty.innerHTML = Orignalqnty - requestqnty;
   }
