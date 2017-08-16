@@ -117,7 +117,8 @@ session_start();
                           <div id="table-scroll">
                             <table class="ui celled table" id='tbl_purchase'>
                               <thead>
-                                <tr><th>Product Name</th>
+                                <tr>
+                                <th>Product Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 </tr>

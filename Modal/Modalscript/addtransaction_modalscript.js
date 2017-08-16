@@ -21,8 +21,9 @@
     document.getElementById('proprice').value = prcperunit;
     $('#procon').text(prprqnty+" "+prunit+" for each Content")
     document.getElementById('procon').value = prprqnty;
-    $('#proqnty').text(qnty+" "+prunit);
-    document.getElementById('proqnty').value = qnty;
+    var newqnty = document.getElementById('stockq'+ID);
+    $('#proqnty').text(newqnty.innerHTML+" "+prunit);
+    document.getElementById('proqnty').value = newqnty.innerHTML;
 
     $.ajax({
 
@@ -65,23 +66,25 @@
     var type = $('#tran_type').dropdown('get value');
     var total = $('#proqnty').val();
     var content = $('#procon').val();
+    var proprice = $('#proprice').val();
     var setprice = $('#Individual_price').val();
     if(type==1) //sold individually
     {
       var requestqnty = document.getElementById('procon').value;
       if(total>=content && setprice>=1)
       {
-        check_stock(requestqnty);
+        check_stock(requestqnty,setprice);
       }
       else {
         alert("Stock of this product is not enough");
       }
     }else if(type==2)
     {
-      var requestqnty = document.getElementById('Repack_quantity').value;
-      if(total>=requestqnty&&requestqnty!='')
+      var requestqnty = parseFloat(document.getElementById('Repack_quantity').value);
+      if(total>=requestqnty)
       {
-        check_stock(requestqnty);
+        check_stock(requestqnty,requestqnty*proprice);
+
       }
       else
       {
@@ -94,7 +97,7 @@
       }
     }
   }
-  function check_stock(requestqnty)
+  function check_stock(requestqnty,price)
   {
   //  alert(requestqnty);
     var table = document.getElementById('tbl_stockbody');
@@ -113,6 +116,7 @@
       {
       }
     }
+
     var ptable = document.getElementById('tbl_body');
     if(stockid!="" && total>=requestqnty)
     {
@@ -120,9 +124,16 @@
           var x = row.insertCell();
           x.setAttribute("style","display:none");
           x.innerHTML=document.getElementById('proname').value;
-          row.insertCell().innerHTML=stockid;
-          row.insertCell().innerHTML="kankong";
-          row.insertCell();
+          var y = row.insertCell();
+          y.setAttribute("style","display:none");
+          y.innerHTML=stockid;
+          var productname = document.getElementById('proname');
+          var z = row.insertCell();
+          z.innerHTML=productname.innerHTML;
+          z.setAttribute("style","cursor:pointer;");
+          z.setAttribute("onclick","remove_row('"+x.innerHTML+"','"+y.innerHTML+"')");
+          row.insertCell().innerHTML=requestqnty;
+          row.insertCell().innerHTML=price;
           check_quantity(x.innerHTML,requestqnty);
 
           $('#addtransactionModal').modal('hide');
@@ -137,4 +148,5 @@
       var qnty =document.getElementById('stockq'+productID);
       var Orignalqnty = qnty.innerHTML;
       qnty.innerHTML = Orignalqnty - requestqnty;
+
   }

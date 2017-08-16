@@ -28,7 +28,6 @@
                 </div>
                 <div class="field">
                   <div class="t-left">
-                    <h6 id='proid' style="display:none"></h6>
                     <h6 id='proname'></h6>
                     <h6 id='procat'></h6>
                     <h6 id='proprice'></h6>

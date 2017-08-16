@@ -69,4 +69,18 @@ function loadProductsToDropBox(){
       });
     }
   }
+  function remove_row(prodid,stockid)
+  {
+
+    var table = document.getElementById('tbl_body');
+    var i;
+    for(i=0;i<table.rows.length;i++)
+    {
+
+      if(table.rows[i].cells[0].innerHTML==prodid && table.rows[i].cells[1].innerHTML==stockid)
+      {
+        table.deleteRow(i);
+      }
+    }
+  }
   $(".purchaseproductDropDown").dropdown({ fullTextSearch: true });
