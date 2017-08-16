@@ -24,7 +24,18 @@
     $('#proqnty').text(qnty+" "+prunit);
     document.getElementById('proqnty').value = qnty;
 
-    
+    $.ajax({
+
+      url:"../PHP/BackEndController/POScontroller.php",
+      type:"POST",
+      data:{func: 2,productid:ID},
+      success: function(resultdata){
+      //  alert(resultdata);
+        $('#tbl_stockbody').html(resultdata);
+
+      }
+
+    });
 
 
   }
@@ -51,7 +62,7 @@
 
   function check_request() //math shit
   {
-  /*  var type = $('#tran_type').dropdown('get value');
+    var type = $('#tran_type').dropdown('get value');
     var total = $('#proqnty').val();
     var content = $('#procon').val();
     var setprice = $('#Individual_price').val();
@@ -59,37 +70,54 @@
     {
       if(total>=content && setprice>=1)
       {
-        $('#selectstockModal').load('../Modal/selectionstockmodal.php', function()
-        {
-          alert("enter1");
-            $('#selectstockModal').modal('show',function()
-            {
-              var id = document.getElementById('proname').value;
-              loadstockdata(id,content,setprice);
-            });
-        });
+        check_stock(requestqnty);
       }
       else {
         alert("Stock of this product is not enough");
       }
-    }else
+    }else if(type==2)
     {
       var requestqnty = document.getElementById('Repack_quantity').value;
       if(total>=requestqnty&&requestqnty!='')
-      {*/
-        $('#selectstockModal').load('../Modal/selectionstockmodal.php',
-        function()
-        {
-            $('#selectstockModal').modal('show',
-            function()
-            {
-              alert("test");
-            });
-        });
-      /*}
+      {
+        check_stock(requestqnty);
+      }
       else
       {
         alert("Stock of this product is not enough");
       }
-    }*/
     }
+    else {
+      {
+        alert("Please insert Transaction Type");
+      }
+    }
+  }
+  function check_stock(stock)
+  {
+    var table = document.getElementById('tbl_stockbody');
+    var total=0;
+    var stockid = "";
+    var i;
+    var checkbox;
+    alert("enter"+table.rows.length);
+    for(i=0;i<table.rows.length;i++)
+    {
+      if(document.getElementById('check'+i).checked)
+      {
+        total=total+parseFloat(table.rows[i].cells[2].innerHTML);
+        stockid = stockid+document.getElementById('check'+i).value+"=";
+      }
+      else
+      {
+          alert('nuay man check');
+      }
+    }
+    alert(stockid);
+    var ptable = document.getElementById('tbl_body');
+    var row = ptable.insertRow(ptable.rows.length);
+    row.insertCell().innerHTML=stockid;
+    row.insertCell().innerHTML="kankong";
+    row.insertCell();
+    alert("inserted");
+  }

@@ -37,14 +37,14 @@
                 </div>
                 <div class="field">
 
-                    <table class="ui definition table">
+                    <table class="ui definition table" id='tbl_stock'>
                       <thead>
                         <tr><th></th>
                         <th>Quantity</th>
                         <th>Price</th>
                         </tr>
                       </thead>
-                      <tbody id="tbl_body">
+                      <tbody id="tbl_stockbody">
                       </tbody>
                     </table>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="default text">Select Type</div>
                     <div class="menu">
                       <div class='item' data-value="1">Sold Individually</div>
-                      <div class='item' data-value="0">Sold by Repack</div>
+                      <div class='item' data-value="2">Sold by Repack</div>
                     </div>
                   </div>
                 </div>
