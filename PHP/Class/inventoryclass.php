@@ -4,6 +4,74 @@
 
   class InventoryClass{
 
+    //sales
+    private $salesID;
+    private $salesTotalPrice;
+    private $salesDate;
+    private $salesType;
+    private $patientID;
+    private $salesStatus;
+
+    public function setsalesID($salesid)
+    {
+      $this->salesID = $salesid;
+    }
+    public function setsalesTotalPrice($salestotalprice)
+    {
+      $this->salesTotalPrice = $salestotalprice;
+    }
+    public function setsalesDate($salesdate)
+    {
+      $this->salesDate = $salesdate;
+    }
+    public function setsalesStatus($salesstatus)
+    {
+      $this->salesStatus = $salesstatus;
+    }
+
+    //fees
+    private $sfeeID;
+    private $sfeeName;
+    private $sfeeAmnt;
+    private $sfeeStatus;
+
+    public function setsfeeID($sfeeid)
+    {
+      $this->sfeeID = $sfeeid;
+    }
+    public function setsfeeName($sfeename)
+    {
+      $this->sfeeName = $sfeename;
+    }
+    public function setsfeeAmnt($sfeeamnt)
+    {
+      $this->sfeeAmnt = $sfeeamnt;
+    }
+
+    //product
+    private $salesProductID;
+    private $spQnty;
+    private $spAmnt;
+    private $spStatus;
+
+    public function setsalesProductID($salesproductid)
+    {
+      $this->$salesProductID = $salesproductid;
+    }
+    public function setspQnty($spqnty)
+    {
+      $this->$spQnty = $spqnty;
+    }
+    public function setspAmnt($spamnt)
+    {
+      $this->$spAmnt = $spamnt;
+    }
+    public function setspStatus($spstatus)
+    {
+      $this->$spStatus = $spstatus;
+    }
+
+    //inventory
     private $productID;
     private $productName;
     private $productCategory;
@@ -70,20 +138,17 @@
 
     }
 
-
     public function setProductID($productid){
 
       $this->productID = $this->clean_value($productid);
 
     }
 
-
     public function getProductID(){
 
       return $this->productID;
 
     }
-
 
     public function loadProductListToCards($srch){
 
@@ -182,6 +247,119 @@
 
       return $return_value;
 
+    }
+    public function savesales()
+    {
+      include("../connection.php");
+      $this->generateID("sales");
+      $sql = $con->prepare("INSERT INTO tblsales (salesID,salesTotalPrice,salesDate,salesType,patientID,salesStatus) VALUES ('".$this->salesID."',".$this->salesTotalPrice.",'".$this->salesDate."',1,1,1)");
+
+      if($sql->execute() == TRUE)
+      {
+        return $this->salesID;
+      }
+      else
+      {
+          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+    }
+    public function savefees()
+    {
+      include("../connection.php");
+      $this->generateID("fees");
+      $sql = $con->prepare("INSERT INTO tblsalesfees (sfeeID,sfeeName,sfeeAmnt,salesID,sfeeStatus) VALUES ('".$this->sfeeID."','".$this->sfeeName."',".$this->sfeeAmnt.",'".$this->salesID."',1)");
+
+      if($sql->execute() == TRUE)
+      {
+        return 1;
+      }
+      else
+      {
+          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+    }
+    public function saveproduct()
+    {
+      include("../connection.php");
+      $this->generateID("product");
+      $sql = $con->prepare("INSERT INTO tblsalesproduct (salesProductID,salesID,productID,spQnty,spAmnt,spStatus) VALUES ('".$this->salesProductID."','".$this->salesID."','".$this->productID."',".$this->spQnty.",".$this->spAmnt.",1)");
+
+      if($sql->execute() == TRUE)
+      {
+        return 1;
+      }
+      else
+      {
+          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+    }
+    public function generateID($type)
+    {
+      include("../connection.php");
+      if($type=="sales")
+      {
+        $sql = "SELECT salesID FROM tblsales ORDER BY salesID DESC LIMIT 1";
+
+        $result = $con->query($sql);
+        if($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $hold = explode("-",$row['salesID']);
+                $id = $hold[1]+1;
+                $this->salesID = "TR-".$id;
+            }
+            //echo "enter = {".$this->salesID."} ";
+        }
+        else
+        {
+            $this->salesID = "TR-10000";
+
+        }
+
+      }
+      else if($type=="fees")
+      {
+        $sql = "SELECT sfeeID FROM tblsalesfees ORDER BY sfeeID DESC LIMIT 1";
+
+        $result = $con->query($sql);
+        if($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $hold = explode("-",$row['sfeeID']);
+                $id = $hold[1]+1;
+                $this->sfeeID = "offline_SF-".$id;
+            }
+        }
+        else
+        {
+            $this->sfeeID = "offline_SF-10000";
+
+        }
+
+      }
+      else if($type=="product")
+      {
+        $sql = "SELECT salesProductID FROM tblsalesproduct ORDER BY salesProductID DESC LIMIT 1";
+
+        $result = $con->query($sql);
+        if($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $hold = explode("-",$row['salesProductID']);
+                $id = $hold[1]+1;
+                $this->salesProductID = "offline_SP-".$id;
+            }
+        }
+        else
+        {
+            $this->sfeeID = "offline_SP-10000";
+
+        }
+
+      }
     }
 
   }

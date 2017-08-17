@@ -132,9 +132,9 @@
           z.innerHTML=productname.innerHTML;
           z.setAttribute("style","cursor:pointer;");
           z.setAttribute("onclick","remove_row('"+x.innerHTML+"','"+y.innerHTML+"')");
-          row.insertCell().innerHTML=requestqnty;
-          row.insertCell().innerHTML=price;
-          check_quantity(x.innerHTML,requestqnty);
+          row.insertCell().innerHTML=parseFloat(requestqnty).toFixed(2);
+          row.insertCell().innerHTML=parseFloat(price).toFixed(2);
+          check_quantity(x.innerHTML,parseFloat(requestqnty).toFixed(2));
 
           $('#addtransactionModal').modal('hide');
     }
@@ -142,7 +142,9 @@
     {
         alert("Please check/select enough Stocks");
     }
+    total_update();
   }
+
   function check_quantity(productID,requestqnty)
   {
       var qnty =document.getElementById('stockq'+productID);

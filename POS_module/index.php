@@ -135,7 +135,7 @@ session_start();
                             <div align="right"><b>Total:</b></div>
                           </div>
                           <div class="field">
-                            <div align="center"><b>0.00</b></div>
+                            <div align="center" id="total_value"><b>0.00</b></div>
                           </div>
                         </div>
                         <div class="header-statusbar">
@@ -145,7 +145,7 @@ session_start();
                                   <input class="mini ui gray button invent1" type="submit" name="submit" value="Clear All" onclick="clearall()">
                               </div>
                               <div class="field right">
-                                <input class="mini ui gray button invent1" type="submit" name="submit" value="Save">
+                                <input class="mini ui gray button invent1" type="submit" name="submit" value="Save" onclick="saveall()">
                                 <input class="mini ui gray button invent1" type="submit" name="submit" value="Save and Print">
                               </div>
                           </div>

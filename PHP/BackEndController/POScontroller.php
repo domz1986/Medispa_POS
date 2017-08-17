@@ -18,6 +18,26 @@
       $loadstocks = new InventoryClass();
       $loadstocks->setProductID($_POST['productid']);
       echo $loadstocks->loadstocks();
+      break;
+
+    case 3: //save transaction sales
+
+      $savesales = new InventoryClass();
+      $savesales->setsalesTotalPrice($_POST['totalprice']);
+      $savesales->setsalesDate($_POST['date']);
+      echo $savesales->savesales();
+      break;
+    case 4:
+
+      $savefees = new InventoryClass();
+      $savefees->setsfeeName($_POST['name']);
+      $savefees->setsfeeAmnt($_POST['amnt']);
+      $savefees->setsalesID($_POST['salesid']);
+      echo $savefees->savefees();
+      break;
+
+
+
   }
 
  ?>

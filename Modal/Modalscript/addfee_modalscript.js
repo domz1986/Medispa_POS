@@ -28,8 +28,7 @@ function addFee()
   z.setAttribute("onclick","remove_row('"+x.innerHTML+"','"+y.innerHTML+"')");
 
   row.insertCell().innerHTML="";
-  row.insertCell().innerHTML=pamnt.value;
-
-
+  row.insertCell().innerHTML=parseFloat(pamnt.value).toFixed(2);
+  total_update();
   $('#addfeeModal').modal('hide');
 }
