@@ -142,7 +142,7 @@ session_start();
                           <div class="header-statusbar-inner">
                             <div class="two fields">
                               <div class="field left">
-                                  <input class="mini ui gray button invent1" type="submit" name="submit" value="Clear All">
+                                  <input class="mini ui gray button invent1" type="submit" name="submit" value="Clear All" onclick="clearall()">
                               </div>
                               <div class="field right">
                                 <input class="mini ui gray button invent1" type="submit" name="submit" value="Save">
@@ -175,6 +175,11 @@ session_start();
 
     <div> <!-- ADD NEW PRODUCT MODAL -->
       <div class="ui small modal addproduct" id="addtransactionModal" style="height: 420px;">
+      </div>
+    </div>
+
+    <div> <!-- ADD NEW PRODUCT MODAL -->
+      <div class="ui small modal addproduct" id="addfeeModal" style="height: 265px;">
       </div>
     </div>
 

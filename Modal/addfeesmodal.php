@@ -5,25 +5,25 @@
 <div class="content">
 
   <form class="ui form" id="addfeeform" onsubmit="return false">
+    <div class="ui top attached segment d-1">
+      <div class="container-fluid">
 
-    <div class="container-fluid">
+          <div class="two fields">
 
-        <div class="two fields">
+            <div class="field">
+              <label>Fee Name</label>
+              <input type="text" placeholder="Fee Name" name="fee_name" id="fee_name">
+            </div>
 
-          <div class="field">
-            <label>Fee Name<label>
-            <input type="text" placeholder="Fee Name" name="fee_name" id="fee_name">
+            <div class="field">
+              <label>Fee Amount</label>
+              <input type="text" placeholder="Fee Amount" name="fee_amnt" id="fee_amnt">
+            </div>
+
           </div>
 
-          <div class="field">
-            <label>Fee Amount<label>
-            <input type="text" placeholder="Fee Amount" name="fee_amnt" id="fee_amnt">
-          </div>
-
-        </div>
-
+      </div>
     </div>
-
   </form>
 
 </div>
@@ -31,9 +31,10 @@
 <div class="right actions">
 
   <input class="ui pink button" type="submit"
-          name="done" value="Add" onclick="addNewFee()">
+          name="done" value="Add" onclick="addFee()">
 
   <input class="ui cancel pink button"  type="submit"
           name="done" value="Close">
 
 </div>
+<script src="../Modal/Modalscript/addfee_modalscript.js"></script>
