@@ -127,23 +127,24 @@ function loadProductsToDropBox(){
     var Today = getDateTime();
     //alert(Today);
     var i;
-    var len = table.rows.length
+    var len = table.rows.length;
     var transactionID = "";
-    if(table.rows[0].cells[0].innerHTML!="")
+    if(len!=0)
     {
         $.ajax({
             url: "../PHP/BackEndController/POScontroller.php",
             type: "POST",
             data: {func: 3,totalprice:totalP,date:Today},
+            async: false,
             success: function(resultdata)
             {
               //alert(resultdata);
                 if($.trim(resultdata) != "")
                 {
                     transactionID=$.trim(resultdata);
-                    for(i=0;i<=len;i++)
+                    for(i=0;i<len;i++)
                     {
-                        if(table.rows[i].cells[0].innerHTML=="fees")
+                        if(table.rows[i].cells[0].innerHTML=="fees") //FEES
                         {
                           var fname = table.rows[i].cells[2].innerHTML;
                           var fprice = table.rows[i].cells[4].innerHTML;
@@ -152,9 +153,10 @@ function loadProductsToDropBox(){
                               url: "../PHP/BackEndController/POScontroller.php",
                               type: "POST",
                               data: {func: 4,name:fname,amnt:fprice,salesid:transactionID},
+                              async: false,
                               success: function(resultdata)
                               {
-                                  alert(resultdata);
+                              //    alert(resultdata);
                                   if($.trim(resultdata) != "")
                                   {
 
@@ -168,24 +170,83 @@ function loadProductsToDropBox(){
                         }
                         else
                         {
-                          
+                          var salesstockid = table.rows[i].cells[1].innerHTML.split("=");
+                          var salesproductid = table.rows[i].cells[0].innerHTML;
+                          var spQnty = table.rows[i].cells[3].innerHTML;
+                          var spAmnt = table.rows[i].cells[4].innerHTML;
+                          var spQntytemp = spQnty;
+                          var w = 0;
+                          var lens = salesstockid.length-1;
+                          //alert("enter product");
+                          for(w=0;w<lens;w++)
+                          {
+                            //alert("product spQntytemp: "+salesstockid[w]+" / "+spQntytemp);
+                            spQntytemp=ajax(salesstockid[w],spQntytemp);
+                            //alert("spQntytemp "+spQntytemp);
+                            if(spQntytemp==true)
+                            {
+                              var fprice = table.rows[i].cells[4].innerHTML;
+                              //alert("transaction ID:"+transactionID);
+                              $.ajax({
+                                  url: "../PHP/BackEndController/POScontroller.php",
+                                  type: "POST",
+                                  data: {func: 5,salesid:transactionID,proid:salesproductid,spqnty:spQnty,spamnt:spAmnt},
+                                  async: false,
+                                  success: function(resultdata)
+                                  {
+                                    //  alert(resultdata);
+                                      if($.trim(resultdata) != "")
+                                      {
 
+                                      }else
+                                      {
+                                          alert("Fee: Error ");
+                                      }
+                                  }
+                                });
+                            }
+                          }
+                      //  alert("liga aki?");
                         }
                     }
+
                 }
                 else
                 {
                     alert("Error gayod!");
                 }
+              //  alert("liga este?");
             }
+
           });
 
 
     }
-    else {
+    else
+    {
       alert("No transaction to be saved!");
     }
+    alert("liga punta?");
     location.reload();
+  }
+  function ajax(stockID,spQntytemp)
+  {
+    var result;
+    //alert("entra?");
+    $.ajax({
+        url: "../PHP/BackEndController/POScontroller.php",
+        type: "POST",
+        data: {func: 6,stockid:stockID,spqnty:spQntytemp},
+        async: false,
+        success: function(resultdata)
+        {
+            //alert("remainder "+resultdata);
+            result=Math.abs($.trim(resultdata));
+        }
+      });
+      return result;
+      //alert("sale?");
+
   }
   function getDateTime()
   {

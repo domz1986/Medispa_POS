@@ -27,7 +27,8 @@
       $savesales->setsalesDate($_POST['date']);
       echo $savesales->savesales();
       break;
-    case 4:
+
+    case 4: //save fees
 
       $savefees = new InventoryClass();
       $savefees->setsfeeName($_POST['name']);
@@ -36,7 +37,22 @@
       echo $savefees->savefees();
       break;
 
+    case 5: //save product
 
+      $saveproduct = new InventoryClass();
+      $saveproduct->setsalesID($_POST['salesid']);
+      $saveproduct->setproductID($_POST['proid']);
+      $saveproduct->setspQnty($_POST['spqnty']);
+      $saveproduct->setspAmnt($_POST['spamnt']);
+      echo $saveproduct->saveproduct();
+      break;
+
+    case 6: //reduce stocks of products
+      $reducestock = new InventoryClass();
+      $reducestock->setstockID($_POST['stockid']);
+      $reducestock->setspQnty($_POST['spqnty']);
+      echo $reducestock->reducestockqnty();
+      break;
 
   }
 

@@ -12,6 +12,37 @@
     private $patientID;
     private $salesStatus;
 
+    //fees
+    private $sfeeID;
+    private $sfeeName;
+    private $sfeeAmnt;
+    private $sfeeStatus;
+
+    //product STOCKS
+    private $stockID;
+    private $stockQntyRemaining;
+
+    //product
+    private $salesProductID;
+    private $spQnty;
+    private $spAmnt;
+    private $spStatus;
+
+    //inventory
+    private $productID;
+    private $productName;
+    private $productCategory;
+    private $productUnit;
+    private $productPricePerUnit;
+    private $productQntyPerUnit;
+    private $productCompany;
+    private $productPhoto = "noimage.jpg";
+
+    private $alertType;
+    private $alertQuantity;
+
+
+
     public function setsalesID($salesid)
     {
       $this->salesID = $salesid;
@@ -29,11 +60,7 @@
       $this->salesStatus = $salesstatus;
     }
 
-    //fees
-    private $sfeeID;
-    private $sfeeName;
-    private $sfeeAmnt;
-    private $sfeeStatus;
+
 
     public function setsfeeID($sfeeid)
     {
@@ -48,41 +75,34 @@
       $this->sfeeAmnt = $sfeeamnt;
     }
 
-    //product
-    private $salesProductID;
-    private $spQnty;
-    private $spAmnt;
-    private $spStatus;
-
     public function setsalesProductID($salesproductid)
     {
-      $this->$salesProductID = $salesproductid;
+      $this->salesProductID = $salesproductid;
     }
     public function setspQnty($spqnty)
     {
-      $this->$spQnty = $spqnty;
+      $this->spQnty = $spqnty;
     }
     public function setspAmnt($spamnt)
     {
-      $this->$spAmnt = $spamnt;
+      $this->spAmnt = $spamnt;
     }
     public function setspStatus($spstatus)
     {
-      $this->$spStatus = $spstatus;
+      $this->spStatus = $spstatus;
     }
 
-    //inventory
-    private $productID;
-    private $productName;
-    private $productCategory;
-    private $productUnit;
-    private $productPricePerUnit;
-    private $productQntyPerUnit;
-    private $productCompany;
-    private $productPhoto = "noimage.jpg";
 
-    private $alertType;
-    private $alertQuantity;
+    public function setstockID($stock_id)
+    {
+      $this->stockID = $this->clean_value($stock_id);
+    }
+    public function setstockQntyRemaining($stockqntyremaining)
+    {
+      $this->stockQntyRemaining = $stockqntyremaining;
+    }
+
+
 
     public function setProductName($name){
 
@@ -291,6 +311,46 @@
       else
       {
           return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+    }
+    public function reducestockqnty()
+    {
+      include("../connection.php");
+
+      $sql = "SELECT stockQntyRemaining FROM tblproductstocks WHERE stockStatus LIKE 1 AND stockQntyRemaining > 0 AND stockID = '".$this->stockID."'";
+
+      $result = $con->query($sql);
+      $stockqnty = 0;
+      if($result->num_rows > 0)
+      {
+        while($row = $result->fetch_assoc())
+        {
+          $stockqnty=$row['stockQntyRemaining'];
+        }
+      }
+
+
+      if($this->spQnty<=$stockqnty)
+      {
+        $sql2 = $con->prepare("UPDATE tblproductstocks SET stockQntyRemaining=$stockqnty-$this->spQnty WHERE stockID = '".$this->stockID."'");
+
+        if($sql2->execute() == TRUE)
+        {
+          return true;
+        }
+        else
+        {
+            return "Statement failed: ". $sql2->error . " <br> ".$con->error;
+        }
+      }
+      else
+      {
+        $sql2 = $con->prepare("UPDATE tblproductstocks SET stockQntyRemaining=0 WHERE stockID = '".$this->stockID."'");
+        $remainder = $stockqnty-$this->spQnty;
+        if($sql2->execute() == TRUE)
+        {
+          return $remainder;
+        }
       }
     }
     public function generateID($type)
