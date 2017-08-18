@@ -226,7 +226,7 @@ function loadProductsToDropBox(){
     {
       alert("No transaction to be saved!");
     }
-    alert("liga punta?");
+  //  alert("liga punta?");
     location.reload();
   }
   function ajax(stockID,spQntytemp)
