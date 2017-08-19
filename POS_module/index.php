@@ -146,7 +146,7 @@ session_start();
                               </div>
                               <div class="field right">
                                 <input class="mini ui gray button invent1" type="submit" name="submit" value="Save" onclick="saveall()">
-                                <input class="mini ui gray button invent1" type="submit" name="submit" value="Save and Print">
+                                <input class="mini ui gray button invent1" type="submit" name="submit" value="Save and Print" onclick="open_report_win()">
                               </div>
                           </div>
                         </div>

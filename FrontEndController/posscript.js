@@ -275,4 +275,15 @@ function loadProductsToDropBox(){
        var dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
         return dateTime;
   }
+  function open_report_win()
+  {
+    var store = $.trim(document.getElementById('tbl_body').innerHTML);
+    var total = $.trim($('#total_value').val());
+    var datetime = getDateTime();
+    sessionStorage.setItem("senta", store);
+    sessionStorage.setItem("total", total);
+    sessionStorage.setItem("datetime", datetime);
+    saveall();
+    window.open('../Print/TransactionDetails.php','_blank');
+  }
   $(".purchaseproductDropDown").dropdown({ fullTextSearch: true });
