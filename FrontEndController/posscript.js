@@ -95,6 +95,8 @@ function loadProductsToDropBox(){
   }
   function clearall()
   {
+    location.reload();
+    /*
     var table = document.getElementById('tbl_body');
     var i;
     var len = table.rows.length
@@ -105,7 +107,7 @@ function loadProductsToDropBox(){
       table.deleteRow(0);
   //    alert("ping");
     }
-    total_update();
+    total_update();*/
   }
   function total_update()
   {
