@@ -98,7 +98,7 @@ function loadProductsToDropBox(){
     var table = document.getElementById('tbl_body');
     var i;
     var len = table.rows.length
-    alert("len "+len);
+  //  alert("len "+len);
     for(i=0;i<len;i++)
     {
   //    alert("i "+i);
