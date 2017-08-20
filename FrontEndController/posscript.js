@@ -101,9 +101,9 @@ function loadProductsToDropBox(){
     alert("len "+len);
     for(i=0;i<len;i++)
     {
-      alert("i "+i);
+  //    alert("i "+i);
       table.deleteRow(0);
-      alert("ping");
+  //    alert("ping");
     }
     total_update();
   }
