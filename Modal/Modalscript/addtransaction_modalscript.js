@@ -135,6 +135,12 @@
           row.insertCell().innerHTML=parseFloat(requestqnty).toFixed(2);
           row.insertCell().innerHTML=parseFloat(price).toFixed(2);
           check_quantity(x.innerHTML,parseFloat(requestqnty).toFixed(2));
+          var z1 = row.insertCell();
+          z1.setAttribute("style","display:none");
+          var productQntyperUnit = document.getElementById('procon').innerHTML.split(' ');
+          var qntyy = productQntyperUnit[0];
+          z1.innerHTML=qntyy;
+
 
           $('#addtransactionModal').modal('hide');
     }

@@ -9,7 +9,7 @@ session_start();
 
   <head>
 
-    <title>Inventory</title>
+    <title>MediSpa POS</title>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

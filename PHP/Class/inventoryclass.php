@@ -201,7 +201,7 @@
           }
           else {
 
-            $qnty = $row['Qnty'];
+            $qnty = $row['Qnty']*$row['productQntyPerUnit'];
 
           }
 
@@ -249,14 +249,19 @@
       //echo $sql;
       if($result->num_rows > 0)
       {
-        $checkid=0;
-        while($row = $result->fetch_assoc())
+        $sql2 = "SELECT productQntyPerUnit from tblproduct where productID = '".$this->productID."'";
+        $result2 = $con->query($sql2);
+        while($row2 = $result2->fetch_assoc())
         {
-          echo "<tr>";
-          echo "<td><input type='checkbox' value='".$row['stockID']."' id='check".$checkid."' style='display:block'></td>";
-          echo "<td>".$row['stockExpiration']."</td>";
-          echo "<td>".$row['stockQntyRemaining']."</td></tr>";
-          $checkid++;
+            $checkid=0;
+            while($row = $result->fetch_assoc())
+            {
+              echo "<tr>";
+              echo "<td><input type='checkbox' value='".$row['stockID']."' id='check".$checkid."' style='display:block'></td>";
+              echo "<td>".$row['stockExpiration']."</td>";
+              echo "<td>".$row['stockQntyRemaining']*$row2['productQntyPerUnit']."</td></tr>";
+              $checkid++;
+            }
         }
       }
 

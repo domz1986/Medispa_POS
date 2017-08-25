@@ -175,8 +175,9 @@ function loadProductsToDropBox(){
                           var salesstockid = table.rows[i].cells[1].innerHTML.split("=");
                           var salesproductid = table.rows[i].cells[0].innerHTML;
                           var spQnty = table.rows[i].cells[3].innerHTML;
+                          var spQpU = table.rows[i].cells[5].innerHTML;
                           var spAmnt = table.rows[i].cells[4].innerHTML;
-                          var spQntytemp = spQnty;
+                          var spQntytemp = parseFloat(spQnty) / parseFloat(spQpU);
                           var w = 0;
                           var lens = salesstockid.length-1;
                           //alert("enter product");
