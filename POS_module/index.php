@@ -90,6 +90,7 @@ session_start();
                                       </div>
                                       <div class="right field">
                                           <input class="mini ui pink button" type="submit" name="submit" value="Add Additional Fees" onclick="addFeetotable()">
+                                          <input class="mini ui pink button" type="submit" name="submit"  value="Add Discount" onclick="addDiscounttotable()">
                                       </div>
                                   </div>
                             </div>
@@ -180,6 +181,11 @@ session_start();
 
     <div> <!-- ADD NEW PRODUCT MODAL -->
       <div class="ui small modal addproduct" id="addfeeModal" style="height: 265px;">
+      </div>
+    </div>
+
+    <div> <!-- ADD NEW PRODUCT MODAL -->
+      <div class="ui small modal addproduct" id="addDiscountModal" style="height: 265px;">
       </div>
     </div>
 

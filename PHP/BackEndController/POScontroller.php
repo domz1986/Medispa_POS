@@ -54,6 +54,13 @@
       echo $reducestock->reducestockqnty();
       break;
 
+    case 7: //reduce stocks of products
+      $reducestock = new InventoryClass();
+      $reducestock->setsalesID($_POST['salesid']);
+      $reducestock->setsdAmnt($_POST['sdamnt']);
+      echo $reducestock->savediscount();
+      break;
+
   }
 
  ?>

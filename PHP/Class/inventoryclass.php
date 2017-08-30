@@ -18,6 +18,11 @@
     private $sfeeAmnt;
     private $sfeeStatus;
 
+    //discount
+    private $sdID;
+    private $sdAmnt;
+    private $sdStatus;
+
     //product STOCKS
     private $stockID;
     private $stockQntyRemaining;
@@ -41,7 +46,18 @@
     private $alertType;
     private $alertQuantity;
 
-
+    public function setsdID($sdid)
+    {
+      $this->sdID = $sdid;
+    }
+    public function setsdAmnt($sdamnt)
+    {
+      $this->sdAmnt = $sdamnt;
+    }
+    public function setStatus($sdstatus)
+    {
+      $this->sdStatus = $sdstatus;
+    }
 
     public function setsalesID($salesid)
     {
@@ -91,6 +107,7 @@
     {
       $this->spStatus = $spstatus;
     }
+
 
 
     public function setstockID($stock_id)
@@ -303,10 +320,26 @@
           return "Statement failed: ". $sql->error . " <br> ".$con->error;
       }
     }
+    public function savediscount()
+    {
+      include("../connection.php");
+      $this->generateID("discount");
+      $sql = $con->prepare("INSERT INTO tblsalesdiscount (salesdiscountID,salesID,discountPrice,salesdiscountstatus) VALUES ('".$this->sdID."','".$this->salesID."',".$this->sdAmnt.",1)");
+
+      if($sql->execute() == TRUE)
+      {
+        return 1;
+      }
+      else
+      {
+          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+    }
     public function saveproduct()
     {
       include("../connection.php");
       $this->generateID("product");
+
       $sql = $con->prepare("INSERT INTO tblsalesproduct (salesProductID,salesID,productID,spQnty,spAmnt,spStatus) VALUES ('".$this->salesProductID."','".$this->salesID."','".$this->productID."',".$this->spQnty.",".$this->spAmnt.",1)");
 
       if($sql->execute() == TRUE)
@@ -360,6 +393,7 @@
     }
     public function generateID($type)
     {
+    //  echo "generate";
       include("../connection.php");
       if($type=="sales")
       {
@@ -420,10 +454,29 @@
         }
         else
         {
-            $this->sfeeID = "offline_SP-10000";
+            $this->salesProductID = "offline_SP-10000";
 
         }
 
+      }
+      else if($type=="discount")
+      {
+        $sql = "SELECT salesdiscountID FROM tblsalesdiscount ORDER BY salesdiscountID DESC LIMIT 1";
+        $result = $con->query($sql);
+        echo $sql;
+        if($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $hold = explode("-",$row['salesdiscountID']);
+                $id = $hold[1]+1;
+                $this->sdID = "offline_SD-".$id;
+            }
+        }
+        else
+        {
+            $this->sdID = "offline_SD-10000";
+        }
       }
     }
 

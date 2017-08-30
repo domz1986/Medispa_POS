@@ -53,6 +53,14 @@ function loadProductsToDropBox(){
       $('#addfeeModal').modal('show');
     });
   }
+  function addDiscounttotable()
+  {
+    $('#addDiscountModal').load('../Modal/addDiscountmodal.php',
+    function()
+    {
+      $('#addDiscountModal').modal('show');
+    });
+  }
   function addCurrenttable(ID,name,qnty,pic,category,prcperunit,prunit,prprqnty)
   {
   //  alert("este "+ID+'|'+name+'|'+qnty+'|'+pic+'|'+category+'|'+prcperunit+'|'+prunit+"|");
@@ -79,17 +87,25 @@ function loadProductsToDropBox(){
     var i;
     for(i=0;i<table.rows.length;i++)
     {
-      if(table.rows[i].cells[0].innerHTML==prodid && table.rows[i].cells[1].innerHTML==stockid && prodid!="fees")
+    //  alert(table.rows[i].cells[0].innerHTML+" "+prodid);
+      if(table.rows[i].cells[0].innerHTML==prodid && table.rows[i].cells[1].innerHTML==stockid && prodid!="fees" && prodid!="discount")
       {
         var qnty =document.getElementById('stockq'+prodid);
         qnty.innerHTML = parseFloat(qnty.innerHTML) + parseFloat(table.rows[i].cells[3].innerHTML);
         table.deleteRow(i);
+      }
+      else if (table.rows[i].cells[0].innerHTML=="discount" && table.rows[i].cells[1].innerHTML == stockid)
+      {
+        table.deleteRow(i);
+        break;
       }
       else if (table.rows[i].cells[0].innerHTML=="fees" && table.rows[i].cells[1].innerHTML == stockid)
       {
         table.deleteRow(i);
         break;
       }
+
+
     }
     total_update();
   }
@@ -117,7 +133,15 @@ function loadProductsToDropBox(){
     var len = table.rows.length
     for(i=0;i<len;i++)
     {
-      total=total+parseFloat(table.rows[i].cells[4].innerHTML);
+      if(table.rows[i].cells[0].innerHTML=='discount')
+      {
+        total=total-parseFloat(table.rows[i].cells[4].innerHTML);
+      }
+      else
+      {
+        total=total+parseFloat(table.rows[i].cells[4].innerHTML);
+      }
+
     }
     document.getElementById('total_value').innerHTML = "<b>"+parseFloat(total).toFixed(2)+"</b>";
     document.getElementById('total_value').value = parseFloat(total).toFixed(2);
@@ -165,6 +189,29 @@ function loadProductsToDropBox(){
                                   }else
                                   {
                                       alert("Fee: Error ");
+                                  }
+                              }
+                            });
+
+                        }
+                        else if(table.rows[i].cells[0].innerHTML=="discount") //FEES
+                        {
+                          var fprice = table.rows[i].cells[4].innerHTML;
+                          //alert("transaction ID:"+transactionID);
+                          $.ajax({
+                              url: "../PHP/BackEndController/POScontroller.php",
+                              type: "POST",
+                              data: {func: 7,salesid:transactionID,sdamnt:fprice,},
+                              async: false,
+                              success: function(resultdata)
+                              {
+                                //  alert(resultdata);
+                                  if($.trim(resultdata) != "")
+                                  {
+
+                                  }else
+                                  {
+                                      alert("Discount: Error ");
                                   }
                               }
                             });
