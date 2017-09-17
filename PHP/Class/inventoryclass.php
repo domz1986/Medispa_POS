@@ -256,6 +256,7 @@
       }
 
     }
+
     public function loadstocks()
     {
       include("../connection.php");
@@ -283,6 +284,7 @@
       }
 
     }
+
     private function clean_value($value){
 
       $return_value = preg_replace('/[^a-zA-Z0-9\s-_\/().%+&#]/', "", strip_tags($value));
@@ -290,67 +292,130 @@
       return $return_value;
 
     }
+
     public function savesales()
     {
+
       include("../connection.php");
       $this->generateID("sales");
-      $sql = $con->prepare("INSERT INTO tblsales (salesID,salesTotalPrice,salesDate,salesType,patientID,salesStatus) VALUES ('".$this->salesID."',".$this->salesTotalPrice.",'".$this->salesDate."',1,1,1)");
+      $sql = $con->prepare("INSERT INTO tblsales (salesID,salesTotalPrice,salesDate,salesType,patientID,salesStatus)
+                            VALUES ('".$this->salesID."',".$this->salesTotalPrice.",'".$this->salesDate."',1,1,1)");
 
       if($sql->execute() == TRUE)
       {
+
+        $tableName = "tblsales";
+
+        $fieldValue = $this->salesID."=".$this->salesTotalPrice."=".$this->salesDate;
+
+        $sql_createdat = $con->prepare("INSERT INTO tbl_createdat (tableName,fieldValue)
+                              VALUES (?,?)");
+
+        $sql_createdat->bind_param("ss",$tableName,$fieldValue);
+        $sql_createdat->execute();
+
         return $this->salesID;
       }
       else
       {
           return "Statement failed: ". $sql->error . " <br> ".$con->error;
       }
-    }
-    public function savefees()
-    {
-      include("../connection.php");
-      $this->generateID("fees");
-      $sql = $con->prepare("INSERT INTO tblsalesfees (sfeeID,sfeeName,sfeeAmnt,salesID,sfeeStatus) VALUES ('".$this->sfeeID."','".$this->sfeeName."',".$this->sfeeAmnt.",'".$this->salesID."',1)");
 
-      if($sql->execute() == TRUE)
-      {
-        return 1;
-      }
-      else
-      {
-          return "Statement failed: ". $sql->error . " <br> ".$con->error;
-      }
     }
-    public function savediscount()
-    {
-      include("../connection.php");
-      $this->generateID("discount");
-      $sql = $con->prepare("INSERT INTO tblsalesdiscount (salesdiscountID,salesID,discountPrice,salesdiscountstatus) VALUES ('".$this->sdID."','".$this->salesID."',".$this->sdAmnt.",1)");
 
-      if($sql->execute() == TRUE)
-      {
-        return 1;
-      }
-      else
-      {
-          return "Statement failed: ". $sql->error . " <br> ".$con->error;
-      }
-    }
     public function saveproduct()
     {
       include("../connection.php");
       $this->generateID("product");
 
-      $sql = $con->prepare("INSERT INTO tblsalesproduct (salesProductID,salesID,productID,spQnty,spAmnt,spStatus) VALUES ('".$this->salesProductID."','".$this->salesID."','".$this->productID."',".$this->spQnty.",".$this->spAmnt.",1)");
+      $sql = $con->prepare("INSERT INTO tblsalesproduct (salesProductID,salesID,productID,spQnty,spAmnt,spStatus)
+                            VALUES ('".$this->salesProductID."','".$this->salesID."','".$this->productID."',
+                                     ".$this->spQnty.",".$this->spAmnt.",1)");
 
       if($sql->execute() == TRUE)
       {
+
+        $tableName = "tblsalesproduct";
+
+        $fieldValue = $this->salesProductID."=".$this->salesID."=".$this->productID."=".
+                      $this->spQnty."=".$this->spAmnt;
+
+        $sql_createdat = $con->prepare("INSERT INTO tbl_createdat (tableName,fieldValue)
+                              VALUES (?,?)");
+
+        $sql_createdat->bind_param("ss",$tableName,$fieldValue);
+        $sql_createdat->execute();
+
         return 1;
       }
       else
       {
           return "Statement failed: ". $sql->error . " <br> ".$con->error;
       }
+
     }
+
+    public function savefees()
+    {
+      include("../connection.php");
+      $this->generateID("fees");
+      $sql = $con->prepare("INSERT INTO tblsalesfees (sfeeID,sfeeName,sfeeAmnt,salesID,sfeeStatus)
+                            VALUES ('".$this->sfeeID."','".$this->sfeeName."',".$this->sfeeAmnt.",
+                                    '".$this->salesID."',1)");
+
+      if($sql->execute() == TRUE)
+      {
+
+        $tableName = "tblsalesfees";
+
+        $fieldValue = $this->sfeeID."=".$this->sfeeName."=".$this->sfeeAmnt."=".
+                      $this->salesID;
+
+        $sql_createdat = $con->prepare("INSERT INTO tbl_createdat (tableName,fieldValue)
+                              VALUES (?,?)");
+
+        $sql_createdat->bind_param("ss",$tableName,$fieldValue);
+        $sql_createdat->execute();
+
+        return 1;
+      }
+      else
+      {
+          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+
+    }
+
+    public function savediscount()
+    {
+      include("../connection.php");
+      $this->generateID("discount");
+      $sql = $con->prepare("INSERT INTO tblsalesdiscount (salesdiscountID,salesID,discountPrice,salesdiscountstatus)
+                            VALUES ('".$this->sdID."','".$this->salesID."',".$this->sdAmnt.",1)");
+
+      if($sql->execute() == TRUE)
+      {
+
+        $tableName = "tblsalesdiscount";
+
+        $fieldValue = $this->sdID."=".$this->salesID."=".$this->sdAmnt;
+
+        $sql_createdat = $con->prepare("INSERT INTO tbl_createdat (tableName,fieldValue)
+                              VALUES (?,?)");
+
+        $sql_createdat->bind_param("ss",$tableName,$fieldValue);
+        $sql_createdat->execute();
+
+        return 1;
+      }
+      else
+      {
+          return "Statement failed: ". $sql->error . " <br> ".$con->error;
+      }
+
+    }
+
+
     public function reducestockqnty()
     {
       include("../connection.php");
@@ -359,6 +424,7 @@
 
       $result = $con->query($sql);
       $stockqnty = 0;
+
       if($result->num_rows > 0)
       {
         while($row = $result->fetch_assoc())
@@ -370,30 +436,58 @@
 
       if($this->spQnty<=$stockqnty)
       {
-        $sql2 = $con->prepare("UPDATE tblproductstocks SET stockQntyRemaining=$stockqnty-$this->spQnty WHERE stockID = '".$this->stockID."'");
+        $sql2 = $con->prepare("UPDATE tblproductstocks SET stockQntyRemaining=$stockqnty-$this->spQnty
+                                WHERE stockID = '".$this->stockID."'");
 
         if($sql2->execute() == TRUE)
         {
+
+          $tableName = "updateStockQnty";
+
+          $fieldValue = $this->spQnty."=".$this->stockID;
+
+          $sql_updatedat = $con->prepare("INSERT INTO tbl_updatedat (tableName,fieldValue)
+                                VALUES (?,?)");
+
+          $sql_updatedat->bind_param("ss",$tableName,$fieldValue);
+          $sql_updatedat->execute();
+
           return true;
         }
         else
         {
             return "Statement failed: ". $sql2->error . " <br> ".$con->error;
         }
+
       }
       else
       {
-        $sql2 = $con->prepare("UPDATE tblproductstocks SET stockQntyRemaining=0 WHERE stockID = '".$this->stockID."'");
+        $sql2 = $con->prepare("UPDATE tblproductstocks SET stockQntyRemaining=0
+                                WHERE stockID = '".$this->stockID."'");
+
         $remainder = $stockqnty-$this->spQnty;
         if($sql2->execute() == TRUE)
         {
+
+          $tableName = "updateStockQnty";
+
+          $fieldValue = $this->spQnty."=".$this->stockID;
+
+          $sql_updatedat = $con->prepare("INSERT INTO tbl_updatedat (tableName,fieldValue)
+                                VALUES (?,?)");
+
+          $sql_updatedat->bind_param("ss",$tableName,$fieldValue);
+          $sql_updatedat->execute();
+
           return $remainder;
         }
+
       }
     }
+
     public function generateID($type)
     {
-    //  echo "generate";
+      //  echo "generate";
       include("../connection.php");
       if($type=="sales")
       {

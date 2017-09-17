@@ -14,7 +14,8 @@
       {
         while($row = $result->fetch_assoc())
         {
-          $sql_2 = "SELECT SUM((SELECT COALESCE(SUM(sfeeAmnt),0) FROM tblsalesfees WHERE salesID = '".$row['salesID']."')+(SELECT COALESCE(SUM(spAmnt),0) FROM tblsalesproduct WHERE salesID = '".$row['salesID']."')) as sumall";
+          $sql_2 = "SELECT SUM((SELECT COALESCE(SUM(sfeeAmnt),0) FROM tblsalesfees WHERE salesID = '".$row['salesID']."')+(SELECT COALESCE(SUM(spAmnt),0)
+                    FROM tblsalesproduct WHERE salesID = '".$row['salesID']."')) as sumall";
           $result2 = $con->query($sql_2);
           if($result2->num_rows > 0)
           {

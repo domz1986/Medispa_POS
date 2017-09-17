@@ -175,7 +175,7 @@ session_start();
 </div>
 
     <div> <!-- ADD NEW PRODUCT MODAL -->
-      <div class="ui small modal addproduct" id="addtransactionModal" style="height: 420px;">
+      <div class="ui small modal addproduct" id="addtransactionModal" style="min-height: 420px;">
       </div>
     </div>
 
